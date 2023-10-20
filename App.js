@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
 import Header from './components/Header';
 import { useState } from 'react';
 import TodoItem from './components/TodoItem';
@@ -13,11 +13,24 @@ export default function App() {
   ])
 
   const addHandler=(text)=>{
-    setTodos([...todos,{text:text,key:todos.length+1}])
+    if(text.length>3){
+
+      setTodos([...todos,{text:text,key:todos.length+1}])
+    }else{
+      Alert.alert('Oops', 'The todos must be more than 3 characters.', [
+        {
+          text: 'Okay',
+          onPress: () => {
+            console.log('Okay');
+          }
+        }
+      ]);
+      
+
+    }
     
   }
   const pressHandler=(key)=>{
-    console.log(key);
     setTodos(
       todos.filter(ele=>ele.key!==key)
     )
